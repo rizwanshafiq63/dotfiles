@@ -49,7 +49,7 @@ vim.keymap.set("n", "<leader>r", function()
     cmd = "python3 " .. filename
   elseif filetype == "cpp" then
     -- Added -std=c++17 for vector support
-    cmd = "g++ -std=c++17 " .. filename .. " -o /tmp/a.out && /tmp/a.out"
+    cmd = "g++ -std=c++17 \"" .. filename .. "\" -o /tmp/a.out && /tmp/a.out"
   elseif filetype == "c" then
     cmd = "gcc " .. filename .. " -o /tmp/a.out && /tmp/a.out"
   elseif filetype == "java" then
@@ -64,7 +64,8 @@ vim.keymap.set("n", "<leader>r", function()
   end
 
   -- Open Kitty and run the command (In case, you don't have Tmux)
-  vim.cmd("silent !kitty -e sh -c '" .. cmd .. "; exec zsh' &")
+  -- vim.cmd("silent !kitty -e sh -c '" .. cmd .. "; exec zsh' &")
+  vim.cmd("silent !kitty -e zsh -ic '" .. cmd .. "; echo; echo Press ENTER to exit...; read'") -- Keeps terminal open until enter pressed
 end, { noremap = true, silent = true })
 
 -- TMUX HANDLE CASE
