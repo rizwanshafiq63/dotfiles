@@ -19,21 +19,22 @@ vim.wo.number = true
 vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>", { noremap = true, silent = true })
 
 -- =======================
+-- GITHUB COPILOT KEYBINDINGS
+-- =======================
+-- Disable Copilot by default (auto-suggestions)
+vim.g.copilot_enabled = 0
+
+-- Enable Copilot manually with a keymap when you want
+vim.api.nvim_set_keymap("n", "<leader>cp", ":Copilot enable<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cd", ":Copilot disable<CR>", { noremap = true, silent = true })
+
+
+-- =======================
 -- COPY/PASTE KEYBINDINGS 
 -- =======================
 
 -- vim.opt.colorcolumn = "100"; -- Highlight col 100, providing visual guide for line length
 vim.opt.clipboard = "unnamedplus" -- clipboard support (wl-clipboard required or xclip)
-
--- Copy to system clipboard using Ctrl + Shift + C
---vim.api.nvim_set_keymap("v", "<C-S-c>", '"+y', { noremap = true, silent = true })
-
--- Paste from system clipboard using Ctrl + Shift + P in Neovim
---vim.api.nvim_set_keymap("n", "<C-S-p>", '"+p', { noremap = true, silent = true })
-
--- Paste before the cursor using Ctrl + Shift + P (Shift + Insert behavior)
---vim.api.nvim_set_keymap("n", "<C-S-P>", '"+P', { noremap = true, silent = true })
-
 
 -- =======================================
 -- CODE RUN KEYMAP (Java, C++, C, Python)
@@ -54,6 +55,9 @@ vim.keymap.set("n", "<leader>r", function()
   elseif filetype == "java" then
     -- Single-file source code mode (Java 11+). No .class files left on disk.
     cmd = "java " .. filename
+  elseif filetype == "kotlin" then
+    -- cmd = "kotlinc " .. filename .. " -include-runtime -d /tmp/output.jar && java -jar /tmp/output.jar"
+    cmd = "kotlinc " .. filename .. " -include-runtime -d /tmp/output.jar && java --enable-native-access=ALL-UNNAMED -jar /tmp/output.jar"
   else
     print("Unsupported file type: " .. filetype)
     return

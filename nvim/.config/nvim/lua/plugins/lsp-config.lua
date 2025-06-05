@@ -43,15 +43,25 @@ return {
         root_dir = vim.fs.dirname(vim.fs.find({'.git', 'mvnw', 'gradlew'}, { upward = true })[1]),
       })
 
+      -- TailwindCSS
       lspconfig.tailwindcss.setup({
         capabilities = capabilities
       })
+
+      -- Ruby
       lspconfig.ruby_lsp.setup({
         capabilities = capabilities,
-        cmd = { "/home/typecraft/.asdf/shims/ruby-lsp" }
+        cmd = { "/home/rizz/.asdf/shims/ruby-lsp" }
       })
+
+      -- Lua
       lspconfig.lua_ls.setup({
         capabilities = capabilities
+      })
+
+      -- Kotlin
+      lspconfig.kotlin_language_server.setup({
+        capabilities = capabilities,
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -64,3 +74,4 @@ return {
     end,
   },
 }
+

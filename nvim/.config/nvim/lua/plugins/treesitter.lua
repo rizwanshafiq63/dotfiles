@@ -19,6 +19,7 @@ return {
           "java",
           "python",
           "cpp",
+          "kotlin",
         },
         highlight = { enable = true },
         indent = { enable = true },

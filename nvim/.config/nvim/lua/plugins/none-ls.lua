@@ -9,6 +9,7 @@ return {
         null_ls.builtins.formatting.isort,  -- Python imports
         null_ls.builtins.formatting.clang_format, -- C++
         null_ls.builtins.formatting.google_java_format, --Java
+        null_ls.builtins.formatting.ktlint, -- Kotlin
         null_ls.builtins.formatting.shellharden, -- Shell scripts
         null_ls.builtins.formatting.stylua, -- Lua
       },
