@@ -64,6 +64,21 @@ return {
         capabilities = capabilities,
       })
 
+      -- HTML
+      lspconfig.html.setup({
+        capabilities = capabilities,
+      })
+
+      -- CSS / SCSS / LESS
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+      })
+
+      -- JavaScript / TypeScript
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+      })
+
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})

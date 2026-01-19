@@ -12,6 +12,9 @@ return {
         null_ls.builtins.formatting.ktlint, -- Kotlin
         null_ls.builtins.formatting.shellharden, -- Shell scripts
         null_ls.builtins.formatting.stylua, -- Lua
+        -- Frontend / Web
+        null_ls.builtins.formatting.prettier,  -- HTML, CSS, JS, JSON, etc.
+        null_ls.builtins.diagnostics.eslint_d, -- JavaScript linter
       },
     })
 
