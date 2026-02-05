@@ -88,32 +88,6 @@ return {
       }
     end
 
-    -- JavaScript / TypeScript (Node.js)
-    dap.adapters["pwa-node"] = {
-      type = "server",
-      host = "localhost",
-      port = "${port}",
-      executable = {
-        command = "node",
-        args = {
-          vim.fn.stdpath("data")
-            .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-          "${port}",
-        },
-      },
-    }
-    dap.configurations.javascript = {
-      {
-        type = "pwa-node",
-        request = "launch",
-        name = "Launch JS file",
-        program = "${file}",
-        cwd = "${workspaceFolder}",
-        sourceMaps = true,
-      },
-    }
-    dap.configurations.typescript = dap.configurations.javascript
-
     -- Kotlin (java-debug-adapter for Kotlin)
     if vim.fn.executable("java") == 1 then
       dap.adapters.kotlin = {

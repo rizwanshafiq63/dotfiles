@@ -1,4 +1,6 @@
+
 return {
+  -- Mason core
   {
     "williamboman/mason.nvim",
     lazy = false,
@@ -6,86 +8,67 @@ return {
       require("mason").setup()
     end,
   },
+
+  -- Mason ↔ LSP bridge
   {
     "williamboman/mason-lspconfig.nvim",
     lazy = false,
-    opts = {
-      auto_install = true,
-    },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "clangd",
+          "lua_ls",
+          "jdtls",
+          "tailwindcss",
+          "kotlin_language_server",
+          "ruff_lsp",
+          "ruby_lsp",
+        },
+        automatic_installation = true,
+      })
+    end,
   },
+
+  -- Native Neovim LSP config (attached to mason-lspconfig)
   {
-    "neovim/nvim-lspconfig",
+    "williamboman/mason-lspconfig.nvim",
     lazy = false,
     config = function()
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        cmp_nvim_lsp.default_capabilities()
-      )
+      local servers = {
+        clangd = {
+          capabilities = {
+            offsetEncoding = { "utf-16" },
+          },
+        },
 
-      local lspconfig = require("lspconfig")
+        jdtls = {
+          cmd = { "jdtls" },
+          root_dir = vim.fs.dirname(
+            vim.fs.find({ ".git", "mvnw", "gradlew" }, { upward = true })[1]
+          ),
+        },
 
-      -- Python LSP (Using ruff)
-      lspconfig.ruff.setup({})
+        tailwindcss = {},
+        ruff_lsp = {},
+        ruby_lsp = {
+          cmd = { vim.fn.expand("~/.asdf/shims/ruby-lsp") },
+        },
+        lua_ls = {},
+        kotlin_language_server = {},
+      }
 
-      -- C++ LSP (Using clangd)
-      lspconfig.clangd.setup({
-        capabilities = {
-          offsetEncoding = { "utf-16" }
-        }
-      })
+      for name, cfg in pairs(servers) do
+        vim.lsp.config(name, cfg)
+      end
 
-      -- Java LSP (Using jdtls)
-      lspconfig.jdtls.setup({
-        cmd = { "jdtls" },
-        root_dir = vim.fs.dirname(vim.fs.find({'.git', 'mvnw', 'gradlew'}, { upward = true })[1]),
-      })
-
-      -- TailwindCSS
-      lspconfig.tailwindcss.setup({
-        capabilities = capabilities
-      })
-
-      -- Ruby
-      lspconfig.ruby_lsp.setup({
-        capabilities = capabilities,
-        cmd = { "/home/rizz/.asdf/shims/ruby-lsp" }
-      })
-
-      -- Lua
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
-
-      -- Kotlin
-      lspconfig.kotlin_language_server.setup({
-        capabilities = capabilities,
-      })
-
-      -- HTML
-      lspconfig.html.setup({
-        capabilities = capabilities,
-      })
-
-      -- CSS / SCSS / LESS
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-      })
-
-      -- JavaScript / TypeScript
-      lspconfig.tsserver.setup({
-        capabilities = capabilities,
-      })
-
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, {})
-      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})
+      -- Keymaps
+      vim.keymap.set("n", "K", vim.lsp.buf.hover)
+      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition)
+      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references)
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+      vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format)
+      vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
     end,
   },
 }
