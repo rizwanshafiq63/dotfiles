@@ -1,0 +1,62 @@
+* {
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto Mono Medium";
+}
+
+window {
+  font-size: 18px;
+  background-color: rgba(20, 20, 20, 0.75); /* outer box transparency */
+  color: #eeeeee;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Outer container */
+#outer-box {
+  padding: 20px;
+}
+
+/* Inner box: darker and slightly transparent */
+#inner-box {
+  background-color: rgba(30, 30, 46, 0.60); /* darker than outer box */
+  padding: 10px; /* small padding to reduce scroll space */
+  border-radius: 10px;
+}
+
+/* Scroll area inside inner box */
+#scroll {
+  margin: 0px;
+  padding: 8px;
+  border: none;
+  background-color: transparent; /* let inner-box show through */
+}
+
+/* Input field styling */
+#input {
+  margin-bottom: 12px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 10px;
+}
+
+/* Each entry in list */
+#entry {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 10px;
+}
+
+#entry:selected {
+  background: linear-gradient(90deg, #ff0066 0%, #8000ff 100%);
+  color: #ffffff;
+}
+
+#text:selected {
+  color: #ffffff;
+}
+
+/* Images in list entries */
+image {
+  margin-right: 10px;
+}

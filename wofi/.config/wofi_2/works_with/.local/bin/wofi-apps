@@ -1,0 +1,15 @@
+#!/bin/bash
+# ~/.local/bin/wofi-apps
+
+SCREEN_WIDTH=1920
+SCREEN_HEIGHT=1080
+WINDOW_WIDTH=600
+WINDOW_HEIGHT=400
+X_OFFSET=$(( (SCREEN_WIDTH - WINDOW_WIDTH) / 2 ))
+Y_OFFSET=$(( (SCREEN_HEIGHT - WINDOW_HEIGHT) / 2 ))
+
+wofi --show drun \
+    --width $WINDOW_WIDTH --height $WINDOW_HEIGHT \
+    --xoffset $X_OFFSET --yoffset $Y_OFFSET \
+    -theme "$HOME/.config/wofi/style.css" \
+    -opacity 0.85
